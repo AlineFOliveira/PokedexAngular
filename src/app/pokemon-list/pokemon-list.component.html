@@ -1,4 +1,4 @@
-<app-pokemon-card *ngFor="let pokemon of pokemons"
+<app-pokemon-card *ngFor="let pokemon of pokemonService.pokemons |async"
 [pokemon]="pokemon"></app-pokemon-card>
 
 
