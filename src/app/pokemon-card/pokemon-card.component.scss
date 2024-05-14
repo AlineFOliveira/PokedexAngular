@@ -1,0 +1,52 @@
+.pokemon-card{
+    background-color: white;
+    width: 220px;
+    .pokemon-card__image{
+        background-color: #f2f2f2;
+        border-radius: 20px;
+        img{
+            width: 220px;
+        }
+        
+    }
+
+    .pokemon-desc{
+        
+        padding: 10px;
+
+        .pokemon--card__number{
+            color: #919191;
+        }
+
+        .pokemon--card__name{
+            font-size: 25px;
+            margin-bottom: 15px;
+        }
+
+        .pokemon-card__types{
+            display: flex;
+            gap: 10px;
+        }
+
+        .type--grass{
+            background-color: #9bcc50;
+            padding: 5px 20px;
+            border-radius: 5px;
+        }
+
+        .type--poison{
+            background-color: #b97fc9;
+            padding: 5px 20px;
+            border-radius: 5px;
+        }
+
+        .type--fire{
+            background-color: #fd7d24;
+            padding: 5px 20px;
+            border-radius: 5px;
+        }
+    }
+
+    
+}
+
