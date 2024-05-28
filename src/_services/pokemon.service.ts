@@ -1,37 +1,34 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ReplaySubject, map, mergeMap, from } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 import { Pokemon } from '../_model/pokemon';
+import { from } from 'rxjs';
+import { map, mergeMap } from 'rxjs/operators';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PokemonService {
 
   public pokemons: Pokemon[] = [];
-  constructor(
-    private httpClient: HttpClient
-  ) { 
-    const pokemonsUrl = 'https://pokeapi.co/api/v2/pokemon/';
 
-    this.httpClient.get<any>(pokemonsUrl).pipe(
+  constructor(
+    private httpClient: HttpClient,
+  ) {
+    const allPokemonsUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=151';
+
+    this.httpClient.get<any>(allPokemonsUrl).pipe(
       map(value => value.results),
-      map((value: any) =>{
+      map((value: any) => {
         return from(value).pipe(
-          mergeMap((v: any) => this.httpClient.get(v.url))
+          mergeMap((v: any) => this.httpClient.get(v.url)),
         );
       }),
       mergeMap(value => value),
-    ).subscribe(result => {
-      const pokemon: Pokemon = {
-        image: result.sprites.front_default,
-        number: result.id,
-        name: result.name,
-        types: result.types.map(t => t.type.name)
-        
-      };
-
-      this.pokemons[result.id] = pokemon;
+    ).subscribe((result: any) => this.pokemons[result.id] = {
+      image: result.sprites.front_default,
+      number: result.id,
+      name: result.name,
+      types: result.types.map((t: any) => t.type.name),
     });
-    }
+  }
 }
